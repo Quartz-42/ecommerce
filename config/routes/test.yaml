@@ -1,0 +1,18 @@
+# test:
+#     path: /test/{age<\d+>?0}
+#     controller: App\Controller\TestController::test
+#     # permet de dire quelle methode on autorise sur cette route : ici on autorise GET et POST, on pourrait mettre qu'un des 2 (ou autre methode)
+#     methods: [GET, POST]
+#     # pour decider d'ou est accessible le site{subdomain}.monsite.com
+#     host: localhost
+#     #pour decider si la page est accessible en HTTP, HTTPS ou les 2 
+#     schemes: [https, http]
+#     #si on tape monsite.com/test/"age" ca marche
+#     #mais www.monsite.com/test/"age" marcehra pas
+#         #mais api.monsite.com/test/"age" marcehra pas
+
+
+#     # defaults: remplacé par ?0
+#     #     age: 0
+#     # requirements: remplacé par le texte entre chevrons apres age
+#     #     age: \d+
