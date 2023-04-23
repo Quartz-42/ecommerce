@@ -8,9 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ControllerHello
 {
     /**
-     * @Route("/hello{prenom, world}", name="hello", methods={"GET"}, host="localhost", schemes={"https,https"})
+     * @Route("/hello/{prenom?world}", name="hello", methods={"GET"}, host="localhost", schemes={"https","http"})
      */
-
 
     public function hello($prenom)
     {
