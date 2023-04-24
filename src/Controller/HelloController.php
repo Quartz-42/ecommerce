@@ -22,7 +22,7 @@ class ControllerHello
     public function hello($prenom)
     {
         $tva = $this->calculator->calcul(100);
-        dd($tva);
+        dump($tva);
         return new Response("Hello $prenom");
     }
 }
