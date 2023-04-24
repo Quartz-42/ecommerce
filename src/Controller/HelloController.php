@@ -8,19 +8,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ControllerHello
 {
-    protected $logger;
+    // protected $logger;
 
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
+    // public function __construct(LoggerInterface $logger)
+    // {
+    //     $this->logger = $logger;
+    // }
     /**
      * @Route("/hello/{prenom?World}", name="hello", methods={"GET", "POST"}, host="localhost", schemes={"https", "http"})
      */
 
     public function hello($prenom)
     {
-        $this->logger->info("mon msg de log");
+        // $this->logger->info("mon msg de log");
         return new Response("Hello $prenom");
     }
 }
