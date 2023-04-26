@@ -763,9 +763,10 @@ user_dir =
 
 ; Directory in which the loadable extensions (modules) reside.
 ; https://php.net/extension-dir
-extension_dir = "./"
+;extension_dir = "./"
 ; On windows:
-extension_dir = "ext"
+extension_dir = "C:\php\ext"
+
 
 ; Directory where the temporary files should be placed.
 ; Defaults to the system default (see sys_get_temp_dir)
@@ -923,6 +924,7 @@ default_socket_timeout = 60
 ; otherwise it results in segfault when unloading after using SASL.
 ; See https://github.com/php/php-src/issues/8620 for more info.
 ;extension=ldap
+
 ;extension=curl
 ;extension=ffi
 ;extension=ftp
@@ -938,9 +940,9 @@ default_socket_timeout = 60
 ;extension=oci8_12c  ; Use with Oracle Database 12c Instant Client
 ;extension=oci8_19  ; Use with Oracle Database 19 Instant Client
 ;extension=odbc
- extension=openssl
+extension=openssl
 ;extension=pdo_firebird
- extension=pdo_mysql
+extension=pdo_mysql
 ;extension=pdo_oci
 ;extension=pdo_odbc
 ;extension=pdo_pgsql
