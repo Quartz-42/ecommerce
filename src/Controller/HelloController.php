@@ -22,7 +22,7 @@ class ControllerHello
     {
         $tva = $this->calculator->calcul(100);
         dump($tva);
-        phpinfo();
+        //phpinfo();
         //return new Response("Hello $prenom");
     }
 }
