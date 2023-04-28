@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Taxes\Calculator;
+use App\Taxes\Detector;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,8 +21,12 @@ class ControllerHello
      * @Route("/hello/{prenom?World}", name="hello", methods={"GET", "POST"}, host="localhost", schemes={"https", "http"})
      */
 
-    public function hello($prenom, Slugify $slug, Environment $twig)
+    public function hello($prenom, Slugify $slug, Environment $twig, Detector $detector)
     {
+
+        dump($detector->detect(150));
+        dump($detector->detect(20));
+
         dump($twig);
 
         dump($slug->slugify("Hello World"));
