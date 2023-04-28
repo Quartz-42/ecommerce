@@ -20,9 +20,8 @@ class ControllerHello
      * @Route("/hello/{prenom?World}", name="hello", methods={"GET", "POST"}, host="localhost", schemes={"https", "http"})
      */
 
-    public function hello($prenom)
+    public function hello($prenom, Slugify $slug)
     {
-        $slug = new Slugify();
         dump($slug->slugify("Hello World"));
         $tva = $this->calculator->calcul(100);
         dd($tva);
