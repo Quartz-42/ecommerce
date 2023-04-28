@@ -26,7 +26,7 @@ class ControllerHello
         $slug = new Slugify();
         dump($slug->slugify("Hello World"));
         $tva = $this->calculator->calcul(100);
-        dump($tva);
+        dd($tva);
         //phpinfo();
         return new Response("Hello $prenom");
     }
