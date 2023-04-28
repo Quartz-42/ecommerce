@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-use Symfony\Component\VarDumper\VarDumper;
 use App\Taxes\Calculator;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\VarDumper\VarDumper;
+
 
 class ControllerHello
 {
