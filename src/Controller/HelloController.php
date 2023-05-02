@@ -21,18 +21,26 @@ class ControllerHello
      * @Route("/hello/{prenom?World}", name="hello", methods={"GET", "POST"}, host="localhost", schemes={"https", "http"})
      */
 
-    public function hello($prenom, Slugify $slug, Environment $twig, Detector $detector)
+    public function hello($prenom = "World", Environment $twig)
     {
 
-        dump($detector->detect(150));
-        dump($detector->detect(20));
+        // dump($detector->detect(150));
+        // dump($detector->detect(20));
 
-        dump($twig);
+        // dump($twig);
 
-        dump($slug->slugify("Hello World"));
-        $tva = $this->calculator->calcul(100);
-        dd($tva);
-        // phpinfo();
-        return new Response("Hello $prenom");
+        // dump($slug->slugify("Hello World"));
+        // $tva = $this->calculator->calcul(100);
+        // dd($tva);
+        // // phpinfo();
+        //return new Response("Hello $prenom");
+
+        //*********************ESSAI TWIG ******************************* */
+        $html = $twig->render("hello.html.twig", [
+            //on passe un tableau associatif pour lui dire quelles variables utiliser
+            "prenom" => $prenom,
+            "age" => 3
+        ]);
+        return new Response($html);
     }
 }
