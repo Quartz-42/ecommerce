@@ -32,7 +32,7 @@ class ControllerHello
         dump($slug->slugify("Hello World"));
         $tva = $this->calculator->calcul(100);
         dd($tva);
-        //phpinfo();
+        // phpinfo();
         return new Response("Hello $prenom");
     }
 }
