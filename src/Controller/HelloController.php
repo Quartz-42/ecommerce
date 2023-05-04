@@ -48,4 +48,22 @@ class ControllerHello
         ]);
         return new Response($html);
     }
+
+    /**
+     * @Route("/testTwig/{prenom?World}", name="hello", methods={"GET", "POST"}, host="localhost", schemes={"https", "http"})
+     */
+
+    public function testTwig($prenom = "Test", Environment $twig)
+    {
+        $html = $twig->render("test.html.twig", [
+            "prenom" => $prenom,
+            "ages" => [
+                12,
+                26,
+                38,
+                15
+            ]
+        ]);
+        return new Response(($html));
+    }
 }
