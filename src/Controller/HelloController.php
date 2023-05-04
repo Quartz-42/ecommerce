@@ -62,6 +62,11 @@ class ControllerHello
                 26,
                 38,
                 15
+            ],
+            "formateur" => [
+                "prenom" => "Benjamin",
+                "nom" => "Baroche",
+                "age" => 36
             ]
         ]);
         return new Response(($html));
