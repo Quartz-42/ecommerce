@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Taxes\Calculator;
 use App\Taxes\Detector;
 use Cocur\Slugify\Slugify;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
-class ControllerHello
+class ControllerHello extends AbstractController
 {
 
     protected $twig;
@@ -65,11 +66,5 @@ class ControllerHello
         return $this->render("test.html.twig", [
             "age" => 36
         ]);
-    }
-
-    protected function render(string $path, array $variables = [])
-    {
-        $html = $this->twig->render($path, $variables);
-        return new Response(($html));
     }
 }
