@@ -39,7 +39,12 @@ class ControllerHello
         $html = $twig->render("hello.html.twig", [
             //on passe un tableau associatif pour lui dire quelles variables utiliser
             "prenom" => $prenom,
-            "age" => 3
+            "age" => 36,
+            "prenoms" => [
+                "Ben",
+                "John",
+                "Vince"
+            ]
         ]);
         return new Response($html);
     }

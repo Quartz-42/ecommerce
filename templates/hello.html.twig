@@ -19,5 +19,23 @@
 		{% else %}
 			Vous êtes un enfant
 		{% endif %}
+		<ul>
+			{% for i in 1..10 %}
+				<li>
+					Numéro
+					{{i}}
+				</li>
+			{% endfor %}
+		</ul>
+		<ul>
+			{% for personne in prenoms %}
+				<li>
+					Tu t'appelles
+					{{personne | upper}}
+				</li>
+				<li>Et aussi
+					{{personne}}</li>
+			{% endfor %}
+		</ul>
 	</body>
-</html>
+</html></body></html></body></html>
