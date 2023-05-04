@@ -11,64 +11,65 @@ use Twig\Environment;
 
 class ControllerHello
 {
-    protected $calculator;
 
-    public function __construct(Calculator $calculator)
+    protected $twig;
+    public function __construct(Environment $twig)
     {
-        $this->calculator = $calculator;
+        $this->twig = $twig;
     }
+
+    // protected $calculator;
+
+    // public function __construct(Calculator $calculator)
+    // {
+    //     $this->calculator = $calculator;
+    // }
     /**
      * @Route("/hello/{prenom?World}", name="hello", methods={"GET", "POST"}, host="localhost", schemes={"https", "http"})
      */
 
-    public function hello($prenom = "World", Environment $twig)
-    {
+    // public function hello($prenom = "World")
+    // {
 
-        // dump($detector->detect(150));
-        // dump($detector->detect(20));
+    //     // dump($detector->detect(150));
+    //     // dump($detector->detect(20));
 
-        // dump($twig);
+    //     // dump($twig);
 
-        // dump($slug->slugify("Hello World"));
-        // $tva = $this->calculator->calcul(100);
-        // dd($tva);
-        // // phpinfo();
-        //return new Response("Hello $prenom");
+    //     // dump($slug->slugify("Hello World"));
+    //     // $tva = $this->calculator->calcul(100);
+    //     // dd($tva);
+    //     // // phpinfo();
+    //     //return new Response("Hello $prenom");
 
-        //*********************ESSAI TWIG ******************************* */
-        $html = $twig->render("hello.html.twig", [
-            //on passe un tableau associatif pour lui dire quelles variables utiliser
-            "prenom" => $prenom,
-            "age" => 36,
-            "prenoms" => [
-                "Ben",
-                "John",
-                "Vince"
-            ]
-        ]);
-        return new Response($html);
-    }
+    //     //*********************ESSAI TWIG ******************************* */
+    //     $html = $this->twig->render("hello.html.twig", [
+    //         //on passe un tableau associatif pour lui dire quelles variables utiliser
+    //         "prenom" => $prenom,
+    //         "age" => 36,
+    //         "prenoms" => [
+    //             "Ben",
+    //             "John",
+    //             "Vince"
+    //         ]
+    //     ]);
+    //     return new Response($html);
+    // }
 
     /**
-     * @Route("/testTwig/{prenom?World}", name="hello", methods={"GET", "POST"}, host="localhost", schemes={"https", "http"})
+     * @Route("/testTwig", name="hello")
      */
 
-    public function testTwig($prenom = "Test", Environment $twig)
+    public function testTwig()
     {
-        $html = $twig->render("test.html.twig", [
-            "prenom" => $prenom,
-            "ages" => [
-                12,
-                26,
-                38,
-                15
-            ],
-            "formateur" => [
-                "prenom" => "Benjamin",
-                "nom" => "Baroche",
-                "age" => 36
-            ]
+        return $this->render("test.html.twig", [
+            "age" => 36
         ]);
+    }
+
+    protected function render(string $path, array $variables = [])
+    {
+        $html = $this->twig->render($path, $variables);
         return new Response(($html));
     }
 }

@@ -14,7 +14,7 @@ services:
     App\Controller\ControllerHello:
         public: true
         arguments:
-            $calculator: '@App\Taxes\Calculator'
+           # $calculator: '@App\Taxes\Calculator'
         tags: ['controller.service_arguments']
 
     Cocur\Slugify\Slugify: ~
