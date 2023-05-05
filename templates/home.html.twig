@@ -5,7 +5,41 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Ca marche !
-		<i class="fas fa-check"></i>
-	</h1>
+	<h1>Nos produits phares</h1>
+	<div class="row">
+		{% for i in 1..3 %}
+			<div class="col">
+				<div class="card">
+					<img src="https://picsum.photos/500/500" class="img-fluid" alt="img produit">
+					<div class="card-body">
+						<h4 class="card-title">Superbe chaise en bois</h4>
+						<p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem, voluptate?</p>
+						<a href="#" class="btn btn-primary btn-sm">Détails du produit</a>
+						<a href="#" class="btn btn-success btn-sm">Ajouter au panier</a>
+
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<hr>
+	<h2>Un service irréprochable</h2>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At iure sapiente amet ipsum? Autem, harum!</p>
+	<div class="row">
+		{% include "shared/_assurance.html.twig" with {
+            "color": "primary",
+            "icone": "fas fa-truck",
+            "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe voluptates tempore exercitationem illo aperiam ipsam."
+        }%}
+		{% include "shared/_assurance.html.twig" with {
+            "color": "success",
+            "icone": "fas fa-check",
+            "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe voluptates tempore exercitationem illo aperiam ipsam."
+        }%}
+		{% include "shared/_assurance.html.twig" with {
+            "color": "warning",
+            "icone": "fas fa-lock",
+            "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe voluptates tempore exercitationem illo aperiam ipsam."
+        }%}
+	</div>
 {% endblock %}
