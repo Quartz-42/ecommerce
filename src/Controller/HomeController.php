@@ -13,8 +13,8 @@ class HomeController extends AbstractController
      */
     public function homePage(ProductRepository $productRepository)
     {
-        $count = $productRepository->find(1);
-        dump($count);
+        $count = $productRepository->findAll();
+        dd($count);
 
         return $this->render("home.html.twig");
     }
