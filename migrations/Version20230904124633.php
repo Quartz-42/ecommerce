@@ -20,8 +20,8 @@ final class Version20230904124633 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE product ADD main_picture VARCHAR(255) NOT NULL');
-        $this->addSql('ALTER TABLE product ADD short_description TEXT NOT NULL');
+        $this->addSql('ALTER TABLE product ADD main_picture VARCHAR(255)');
+        $this->addSql('ALTER TABLE product ADD short_description TEXT');
     }
 
     public function down(Schema $schema): void
