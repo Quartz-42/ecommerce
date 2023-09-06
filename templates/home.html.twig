@@ -21,9 +21,12 @@
 							{{ product.category.name }}
 						</a>
 						<p class="card-text">{{ product.shortDescription }}</p>
-						<a href="#" class="btn btn-primary btn-sm">Détails du produit</a>
-						<a href="#" class="btn btn-success btn-sm">Ajouter au panier</a>
-
+						<a href="{{ path('product_show', {'category_slug': product.category.slug, 'slug': product.slug }) }}" class="btn btn-primary btn-sm">
+							Détails du produit
+						</a>
+						<a href="#" class="btn btn-success btn-sm">
+							Ajouter au panier
+						</a>
 					</div>
 				</div>
 			</div>
