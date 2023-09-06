@@ -17,9 +17,9 @@
 							{{ product.price /100 }}
 							€
 						</h4>
-						<span class="badge badge-info">
+						<a href="{{ path('product_category', {'slug': product.category.slug }) }}" class="badge badge-info">
 							{{ product.category.name }}
-						</span>
+						</a>
 						<p class="card-text">{{ product.shortDescription }}</p>
 						<a href="#" class="btn btn-primary btn-sm">Détails du produit</a>
 						<a href="#" class="btn btn-success btn-sm">Ajouter au panier</a>

@@ -9,9 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    /**
-     * @Route("/"), name="homepage")
-     */
+    #[Route('/', name: 'homepage')]
     public function homePage(ProductRepository $productRepository): Response
     {
         $products = $productRepository->findBy([], [], 3);
