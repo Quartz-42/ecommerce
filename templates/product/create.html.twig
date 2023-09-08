@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Création d'un produit
+{% endblock %}
+
+{% block body %}
+	<h1>Enregistrement d'un nouveau produit</h1>
+	{{ form_start(form) }}
+	{{ form_row(form.name, {
+		'label': 'Nom',
+		'attr': {
+			'class':'form-control',
+			'placeholder':'Nom du nouveau produit',
+		}
+	})}}
+	{{ form_row(form.save, {
+                            'label': 'Enregistrer',
+                            'attr': {
+                            }
+                        }) }}
+
+{% endblock %}
