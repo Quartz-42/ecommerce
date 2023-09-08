@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProductController extends AbstractController
 {
@@ -52,13 +53,15 @@ class ProductController extends AbstractController
     }
 
     #[Route('/admin/product/create', name: 'product_create')]
-    public function new(Request $request): Response
+    public function new(ProductRepository $productRepository, SluggerInterface $slugger,  Request $request): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $product->setSlug(strtolower($slugger->slug($product->getName())));
+            $productRepository->save($product, true);
             return $this->redirectToRoute('homepage');
         }
 

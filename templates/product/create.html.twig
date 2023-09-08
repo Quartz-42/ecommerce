@@ -7,6 +7,7 @@
 {% block body %}
 	<h1>Enregistrement d'un nouveau produit</h1>
 	{{ form_start(form) }}
+	{{ form_errors(form) }}
 	{{ form_row(form.name, {
 		'label': 'Nom',
 		'attr': {
@@ -14,10 +15,36 @@
 			'placeholder':'Nom du nouveau produit',
 		}
 	})}}
+	{{ form_row(form.shortDescription, {
+		'label': 'Description',
+		'attr': {
+			'class':'form-control',
+			'placeholder':'Description courte du produit',
+		}
+	})}}
+	{{ form_row(form.price, {
+		'label': 'Prix',
+		'attr': {
+			'class':'form-control',
+			'placeholder':'Prix en €',
+		}
+	})}}
+	{{ form_row(form.mainPicture, {
+		'label': 'Image du produit',
+		'attr': {
+			'class':'form-control',
+		}
+	})}}
+	{{ form_row(form.category, {
+		'label': 'Catégorie du produit',
+		'attr': {
+			'class':'form-control',
+		}
+	})}}
+	<br>
 	{{ form_row(form.save, {
-                            'label': 'Enregistrer',
-                            'attr': {
-                            }
-                        }) }}
-
+      'label': 'Créer le produit',
+     })
+	 }}
+	{{ form_end(form) }}
 {% endblock %}
