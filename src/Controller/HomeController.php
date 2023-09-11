@@ -12,10 +12,11 @@ class HomeController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function homePage(ProductRepository $productRepository): Response
     {
-        $products = $productRepository->findBy([], [], 3);
+        $maxResults = 3;
+        $products = $productRepository->findLatestProducts($maxResults);
 
         return $this->render("home.html.twig", [
-            'products' => $products
+            'products' => $products,
         ]);
     }
 }

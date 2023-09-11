@@ -21,4 +21,17 @@ class ProductRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    /**
+     * @return Product[]
+     */
+    public function findLatestProducts(int $maxResults): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.publicationDate <= CURRENT_DATE()')
+            ->orderBy('p.publicationDate', 'ASC')
+            ->setMaxResults($maxResults)
+            ->getQuery()
+            ->getResult();
+    }
 }

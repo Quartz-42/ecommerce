@@ -9,8 +9,8 @@ use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
@@ -60,8 +60,20 @@ class ProductController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //Gestion des images
+            $uploadedFile = $form['mainPicture']->getData();
+            $destination = $this->getParameter('kernel.project_dir') . '/public/uploads/products_image';
+            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $slugger->slug($originalFilename) . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+            $uploadedFile->move(
+                $destination,
+                $newFilename
+            );
+
+            $product->setMainPicture($newFilename);
             $product->setSlug(strtolower($slugger->slug($product->getName())));
             $productRepository->save($product, true);
+
             return $this->redirectToRoute('homepage');
         }
 

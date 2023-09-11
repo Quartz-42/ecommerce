@@ -10,7 +10,7 @@
 		{% for product in products %}
 			<div class="col">
 				<div class="card">
-					<img src="{{ product.mainPicture }}" class="img-fluid" alt="img produit">
+					<img src="{{ asset('uploads/products_image/'~ product.mainPicture) }}" class="img-fluid" alt="image produit">
 					<div class="card-body">
 						<h4 class="card-title">{{ product.name }}
 							-
@@ -20,6 +20,7 @@
 						<a href="{{ path('product_category', {'slug': product.category.slug }) }}" class="badge badge-info">
 							{{ product.category.name }}
 						</a>
+						<p class="card-text">{{ product.publicationDate|date("d/m/Y") }}</p>
 						<p class="card-text">{{ product.shortDescription }}</p>
 						<a href="{{ path('product_show', {'category_slug': product.category.slug, 'slug': product.slug }) }}" class="btn btn-primary btn-sm">
 							Détails du produit

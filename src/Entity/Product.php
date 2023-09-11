@@ -32,6 +32,9 @@ class Product
     #[ORM\Column(type: Types::TEXT)]
     private ?string $shortDescription = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $publicationDate = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Product
     public function setShortDescription(string $shortDescription): static
     {
         $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function getPublicationDate(): ?\DateTimeInterface
+    {
+        return $this->publicationDate;
+    }
+
+    public function setPublicationDate(?\DateTimeInterface $publicationDate): static
+    {
+        $this->publicationDate = $publicationDate;
 
         return $this;
     }

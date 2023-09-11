@@ -25,12 +25,18 @@
 
 	<div class="row">
 		<div class="col-4">
-			<img class="img-fluid" src=" {{ product.mainPicture }}">
+			<img class="img-fluid" src="{{ asset('uploads/products_image/'~ product.mainPicture) }}">
 		</div>
 		<div class="col">
 			<span class="badge badge-primary">
-				{{ product.category.name }}</span>
-			<p>{{ product.shortDescription }}</p>
+				{{ product.category.name }}
+			</span>
+			<p>
+				{{ product.publicationDate|date("d/m/Y") }}
+			</p>
+			<p>
+				{{ product.shortDescription }}
+			</p>
 			<a href="#" class="btn btn-success btn-lg">
 				<i class="fas fa-shopping-cart"></i>
 				Ajouter au panier
