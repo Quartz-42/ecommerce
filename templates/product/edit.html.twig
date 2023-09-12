@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Création d'un produit
+Modification produit
 {% endblock %}
 
 {% block body %}
-	<h1>Enregistrement d'un nouveau produit</h1>
+<h1>Modification du produit : {{ product.name }} </h1>
 	{{ form_start(form) }}
 	{{ form_errors(form) }}
 	{{ form_row(form.name, {
@@ -39,6 +39,7 @@
 		'label': 'Image du produit',
 		'attr': {
 			'class':'form-control',
+            'required': 'false',
 		}
 	})}}
 	{{ form_row(form.category, {
@@ -49,8 +50,10 @@
 	})}}
 	<br>
 	{{ form_row(form.save, {
-      'label': 'Créer le produit',
+      'label': 'Modifier le produit',
      })
 	 }}
 	{{ form_end(form) }}
+
+
 {% endblock %}
