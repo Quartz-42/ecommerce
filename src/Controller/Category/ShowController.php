@@ -22,7 +22,7 @@ class ShowController extends AbstractController
             throw $this->createNotFoundException("La catégorie demandée n'existe pas");
         }
 
-        return $this->render('product/category.html.twig', [
+        return $this->render('category/show.html.twig', [
             'slug' => $slug,
             'category' => $category,
         ]);

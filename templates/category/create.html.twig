@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+	Création d'une catégorie
+{% endblock %}
+
+
+{% block body %}
+	<h1>Création d'une nouvelle catégorie</h1>
+	{{ form_start(form) }}
+	{{ form_errors(form) }}
+	{{ form_row(form.name, {
+		'label': 'Nom de la catégorie'
+	}) }}
+	<br>
+	{{ form_row(form.save, {
+		'label' : 'Créer la catégorie'
+	})}}
+	{{ form_end(form) }}
+{% endblock %}
