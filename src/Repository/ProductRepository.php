@@ -29,7 +29,7 @@ class ProductRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->where('p.publicationDate <= CURRENT_DATE()')
-            ->orderBy('p.publicationDate', 'ASC')
+            ->orderBy('p.publicationDate', 'DESC')
             ->setMaxResults($maxResults)
             ->getQuery()
             ->getResult();

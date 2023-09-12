@@ -22,7 +22,7 @@
 		{% for product in category.products %}
 			<div class="col-3">
 				<div class="card">
-					<img src="{{ asset('uploads/products_image/'~ product.mainPicture) }}" class="img-fluid" alt="img produit">
+    				<img src="{{ product.mainPicture }}" class="img-fluid" alt="image produit">
 					<div class="card-body">
 						<a href="{{ path('product_show', {'category_slug': product.category.slug, 'slug': product.slug }) }}" class="card-title">{{ product.name }}
 						</a>
