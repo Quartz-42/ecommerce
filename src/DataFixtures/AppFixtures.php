@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
-use Faker\Factory;
-use App\Entity\Product;
 use App\Entity\Category;
-use Doctrine\Persistence\ObjectManager;
+use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
@@ -25,15 +25,15 @@ class AppFixtures extends Fixture
         $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
         $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider($faker));
 
-        for ($c = 0; $c < 10; $c++) {
+        for ($c = 0; $c < 10; ++$c) {
             $category = new Category();
             $category
-                ->setName(($faker->department))
+                ->setName($faker->department)
                 ->setSlug(strtolower($this->slugger->slug($category->getName())));
 
             $manager->persist($category);
 
-            for ($p = 0; $p < 30; $p++) {
+            for ($p = 0; $p < 30; ++$p) {
                 $product = new Product();
                 $product
                     ->setName($faker->productName)

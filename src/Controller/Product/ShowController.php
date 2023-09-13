@@ -3,19 +3,17 @@
 namespace App\Controller\Product;
 
 use App\Repository\ProductRepository;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ShowController extends AbstractController
 {
-
     #[Route('/{category_slug}/{slug}', name: 'product_show')]
-
     public function show($slug, ProductRepository $productRepository)
     {
         $product = $productRepository->findOneBy(
             [
-                'slug' => $slug
+                'slug' => $slug,
             ]
         );
 

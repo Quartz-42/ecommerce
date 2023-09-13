@@ -5,15 +5,14 @@ namespace App\Controller\Product;
 use App\Entity\Product;
 use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CreateController extends AbstractController
 {
-
     #[Route('/admin/product/create', name: 'product_create')]
     public function new(ProductRepository $productRepository, SluggerInterface $slugger, Request $request): Response
     {
@@ -22,7 +21,6 @@ class CreateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             // //Gestion des images pour la Prod
             // $uploadedFile = $form['mainPicture']->getData();
             // $destination = $this->getParameter('kernel.project_dir') . '/public/uploads/products_image';

@@ -5,11 +5,11 @@ namespace App\Controller\Category;
 use App\Entity\Category;
 use App\Form\Type\CategoryType;
 use App\Repository\CategoryRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CreateController extends AbstractController
 {
@@ -23,6 +23,7 @@ class CreateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setSlug(strtolower($slugger->slug($category->getName())));
             $categoryRepository->save($category, true);
+
             return $this->redirectToRoute('homepage');
         }
 

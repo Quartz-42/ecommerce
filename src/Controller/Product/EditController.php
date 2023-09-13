@@ -4,10 +4,10 @@ namespace App\Controller\Product;
 
 use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EditController extends AbstractController
 {
@@ -19,7 +19,7 @@ class EditController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() and $form->isValid()) {
-            //Gestion des images pour la prod
+            // Gestion des images pour la prod
             // $uploadedFile = $form['mainPicture']->getData();
             // $destination = $this->getParameter('kernel.project_dir') . '/public/uploads/products_image';
             // $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
