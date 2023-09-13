@@ -22,17 +22,19 @@ class CreateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //Gestion des images
-            $uploadedFile = $form['mainPicture']->getData();
-            $destination = $this->getParameter('kernel.project_dir') . '/public/uploads/products_image';
-            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $newFilename = $slugger->slug($originalFilename) . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
-            $uploadedFile->move(
-                $destination,
-                $newFilename
-            );
 
-            $product->setMainPicture($newFilename);
+
+            // //Gestion des images pour la Prod
+            // $uploadedFile = $form['mainPicture']->getData();
+            // $destination = $this->getParameter('kernel.project_dir') . '/public/uploads/products_image';
+            // $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            // $newFilename = $slugger->slug($originalFilename) . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+            // $uploadedFile->move(
+            //     $destination,
+            //     $newFilename
+            // );
+            // $product->setMainPicture($newFilename);
+
             $product->setSlug(strtolower($slugger->slug($product->getName())));
             $productRepository->save($product, true);
 

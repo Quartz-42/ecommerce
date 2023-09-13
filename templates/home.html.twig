@@ -9,8 +9,14 @@
 	<div class="row">
 		{% for product in products %}
 			<div class="col">
-				<div class="card">
+				<div
+					class="card">
+					{#} Gestion des images avec les fixtures {#}
+					<img
+					src="{{ product.mainPicture }}" class="img-fluid" alt="image produit">
+					{#} Gestion des "vrais" images en production
 					<img src="{{ asset('uploads/products_image/'~ product.mainPicture) }}" class="img-fluid" alt="image produit">
+					{#}
 					<div class="card-body">
 						<h4 class="card-title">{{ product.name }}
 							-
