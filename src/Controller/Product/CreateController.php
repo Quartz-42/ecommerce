@@ -23,7 +23,6 @@ class CreateController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
             // //Gestion des images pour la Prod
             // $uploadedFile = $form['mainPicture']->getData();
             // $destination = $this->getParameter('kernel.project_dir') . '/public/uploads/products_image';
