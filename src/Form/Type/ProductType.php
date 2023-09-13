@@ -2,24 +2,21 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Category;
 use App\Entity\Product;
-use App\Repository\CategoryRepository;
+use App\Entity\Category;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
 {
@@ -28,7 +25,9 @@ class ProductType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('shortDescription', TextareaType::class)
-            ->add('price', MoneyType::class)
+            ->add('price', MoneyType::class, [
+                'divisor' => 100,
+            ])
             ->add('publicationDate', DateType::class, [
                 'widget' => 'single_text',
             ])
@@ -51,19 +50,6 @@ class ProductType extends AbstractType
                 },
             ])
             ->add('save', SubmitType::class);
-
-        $builder->get('price')->addModelTransformer(new CallbackTransformer(
-            function ($value) {
-                if ($value !== null) {
-                    return $value / 100;
-                }
-            },
-            function ($value) {
-                if ($value !== null) {
-                    return $value * 100;
-                }
-            }
-        ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
