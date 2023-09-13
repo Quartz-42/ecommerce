@@ -8,6 +8,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -51,24 +52,18 @@ class ProductType extends AbstractType
             ])
             ->add('save', SubmitType::class);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $form = $event->getForm();
-
-            /**@var Product  */
-            $product = $event->getData();
-
-            if ($product->getPrice() !== null) {
-                $product->setPrice($product->getPrice() / 100);
+        $builder->get('price')->addModelTransformer(new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    return $value / 100;
+                }
+            },
+            function ($value) {
+                if ($value !== null) {
+                    return $value * 100;
+                }
             }
-        });
-
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-            $product = $event->getData();
-
-            if ($product->getPrice() !== null) {
-                $product->setPrice($product->getPrice() * 100);
-            }
-        });
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
