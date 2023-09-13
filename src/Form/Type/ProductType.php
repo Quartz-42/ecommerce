@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
@@ -48,6 +50,25 @@ class ProductType extends AbstractType
                 },
             ])
             ->add('save', SubmitType::class);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $form = $event->getForm();
+
+            /**@var Product  */
+            $product = $event->getData();
+
+            if ($product->getPrice() !== null) {
+                $product->setPrice($product->getPrice() / 100);
+            }
+        });
+
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+            $product = $event->getData();
+
+            if ($product->getPrice() !== null) {
+                $product->setPrice($product->getPrice() * 100);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
