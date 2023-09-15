@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
         $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
         $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider($faker));
 
-        for ($c = 0; $c < 10; ++$c) {
+        for ($c = 0; $c < 5; ++$c) {
             $category = new Category();
             $category
                 ->setName($faker->department)
