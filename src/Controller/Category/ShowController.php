@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ShowController extends AbstractController
 {
-    #[Route('/{slug}', name: 'product_category')]
+    #[Route('/category/{slug}', name: 'product_category')]
     public function category($slug, CategoryRepository $categoryRepository): Response
     {
         $category = $categoryRepository->findOneBy([

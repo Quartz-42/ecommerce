@@ -22,10 +22,10 @@
 		{% for product in category.products %}
 			<div class="col-3">
 				<div class="card">
-    				<img src="{{ product.mainPicture }}" class="img-fluid" alt="image produit">
+					<img src="{{ product.mainPicture }}" class="img-fluid" alt="image produit">
 					<div class="card-body">
-						<a href="{{ path('product_show', {'category_slug': product.category.slug, 'slug': product.slug }) }}" class="card-title">{{ product.name }}
-						</a>
+						<h2 class="card-title">{{ product.name }}
+						</h2>
 						<span>
 							{{ product.price /100 }}
 							€
@@ -39,7 +39,7 @@
 						<p class="card-text">
 							{{ product.shortDescription }}
 						</p>
-						<a href="#" class="btn btn-primary btn-sm">Détails du produit</a>
+						<a href="{{ path('product_show', {'category_slug': product.category.slug, 'slug': product.slug }) }}" class="btn btn-primary btn-sm">Détails du produit</a>
 						<a href="#" class="btn btn-success btn-sm">Ajouter au panier</a>
 					</div>
 				</div>
