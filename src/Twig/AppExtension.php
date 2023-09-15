@@ -4,8 +4,8 @@ namespace App\Twig;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
-use Twig\TwigFunction;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 final class AppExtension extends AbstractExtension
 {
