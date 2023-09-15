@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Inscription à Home24
+{% endblock %}
+
+{% block body %}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
+	<h1>Home Sweet home</h1>
+
+	{{ form_errors(registrationForm) }}
+
+	{{ form_start(registrationForm) }}
+	{{ form_row(registrationForm.fullName, {
+        'label':'Nom complet',
+        'class':'form-control',
+    }) }}
+	<br>
+	{{ form_row(registrationForm.email, {
+        'label':'Votre adresse e-mail',
+        'class':'form-control',
+}) }}
+	<br>
+	{{ form_row(registrationForm.plainPassword, {
+        'label': 'Password',
+        'class':'form-control',
+        }) }}
+	<br>
+	{{ form_row(registrationForm.agreeTerms, {
+        'label' : 'En cochant cette case, je déclare accepter les conditions d\'utilisation'
+    }) }}
+    <br>
+{{ form_row(registrationForm.save, {
+    'label': 'Je m\'inscris !',
+    'class':'form-control',
+}) }}
+	<br>
+	{{ form_end(registrationForm) }}
+{% endblock %}
