@@ -2,11 +2,12 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Category;
-use App\Entity\Product;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use App\Entity\User;
+use App\Entity\Product;
+use App\Entity\Category;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
@@ -46,6 +47,25 @@ class AppFixtures extends Fixture
 
                 $manager->persist($product);
             }
+        }
+
+        $admin = new User();
+        $admin
+            ->setEmail('admin@gmail.com')
+            ->setFullName("admin")
+            ->setPassword("passowrd")
+            ->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($admin);
+
+        for ($u = 0; $u < 5; $u++) {
+            $user = new User();
+            $user
+                ->setEmail('user' . $u . '@gmail.com')
+                ->setFullName($faker->name())
+                ->setPassword("password");
+
+            $manager->persist($user);
         }
 
         $manager->flush();
