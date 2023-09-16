@@ -15,7 +15,7 @@
 				{% endfor %}
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a href="{{ path('app_register') }}" class="nav-link">Inscription</a>
+						<a href="{{ path( 'app_register') }}" class="nav-link">Inscription</a>
 					</li>
 					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 						<li class="nav-item ms-4">

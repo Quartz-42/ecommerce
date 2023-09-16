@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	Inscription à Home24
+{% block title %}Inscription - Home24.fr
 {% endblock %}
 
 {% block body %}
@@ -9,34 +8,29 @@
 		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 	{% endfor %}
 
-	<h1>Home Sweet home</h1>
-
+	<h1>Inscription à Home24.fr</h1>
+	<br>
+	<h2>Votre meilleure décision de la journée !</h2>
+	<br>
 	{{ form_errors(registrationForm) }}
 
 	{{ form_start(registrationForm) }}
-	{{ form_row(registrationForm.fullName, {
-        'label':'Nom complet',
-        'class':'form-control',
-    }) }}
-	<br>
-	{{ form_row(registrationForm.email, {
-        'label':'Votre adresse e-mail',
-        'class':'form-control',
-}) }}
+	{{ form_row(registrationForm.email) }}
 	<br>
 	{{ form_row(registrationForm.plainPassword, {
-        'label': 'Password',
-        'class':'form-control',
+            'label': 'Mot de passe',
+            'class':'form-control'
         }) }}
 	<br>
 	{{ form_row(registrationForm.agreeTerms, {
-        'label' : 'En cochant cette case, je déclare accepter les conditions d\'utilisation'
+        'label': 'J\'accepte les conditions d\'utilisation du site',
+         'class':'form-control'
     }) }}
-    <br>
-{{ form_row(registrationForm.save, {
-    'label': 'Je m\'inscris !',
-    'class':'form-control',
-}) }}
 	<br>
+	{{ form_row(registrationForm.save, {
+        'label': 'Valider mon inscription',
+        'class':'form-control'
+    }) }}
+
 	{{ form_end(registrationForm) }}
 {% endblock %}

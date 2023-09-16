@@ -56,10 +56,9 @@ class AppFixtures extends Fixture
         $hash = $this->hasher->hashPassword($admin, 'password');
         $admin
             ->setEmail('admin@gmail.com')
-            ->setFullName('admin')
             ->setPassword($hash)
             ->setRoles(['ROLE_ADMIN'])
-            ->setIsVerified($faker->boolean());
+            ->setIsVerified(true);
 
         $manager->persist($admin);
 
@@ -67,10 +66,9 @@ class AppFixtures extends Fixture
             $user = new User();
             $hash = $this->hasher->hashPassword($user, 'password');
             $user
-                ->setEmail('user' . $u . '@gmail.com')
-                ->setFullName($faker->name())
+                ->setEmail('user'.$u.'@gmail.com')
                 ->setPassword($hash)
-                ->setIsVerified($faker->boolean());
+                ->setIsVerified(true);
 
             $manager->persist($user);
         }
