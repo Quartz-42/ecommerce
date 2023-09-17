@@ -5,15 +5,17 @@
 {% endblock %}
 
 {% block body %}
+	<h1>Connexion</h1>
+	<br>
 	{% if error %}
 		<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 	{% endif %}
 
 	<form action="{{ path('app_login') }}" method="post">
 		<label for="username">Email:</label>
-		<input type="text" id="username" name="_username" value="{{ last_username }}">
-		<label for="password">Password:</label>
-		<input type="password" id="password" name="_password">
-		<button type="submit">Connexion</button>
+		<input type="text" id="username" name="_username" value="{{ last_username }}" class="ms-3">
+		<label for="password" class="ms-3">Password:</label>
+		<input type="password" id="password" name="_password" class="ms-3">
+		<button type="submit" class="ms-3">Connexion</button>
 	</form>
 {% endblock %}

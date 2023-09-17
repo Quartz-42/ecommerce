@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+
 {% block title %}Inscription - Home24.fr
 {% endblock %}
 
@@ -15,7 +17,9 @@
 	{{ form_errors(registrationForm) }}
 
 	{{ form_start(registrationForm) }}
-	{{ form_row(registrationForm.email) }}
+	{{ form_row(registrationForm.email, {
+		'class':'ms-3'
+	}) }}
 	<br>
 	{{ form_row(registrationForm.plainPassword, {
             'label': 'Mot de passe',
@@ -24,7 +28,7 @@
 	<br>
 	{{ form_row(registrationForm.agreeTerms, {
         'label': 'J\'accepte les conditions d\'utilisation du site',
-         'class':'form-control'
+        'class':'form-control'
     }) }}
 	<br>
 	{{ form_row(registrationForm.save, {
