@@ -2,21 +2,15 @@
 
 namespace App\Controller\Product;
 
-use App\Repository\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Product;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ShowController extends AbstractController
 {
     #[Route('/{category_slug}/{slug}', name: 'product_show')]
-    public function show($slug, ProductRepository $productRepository)
+    public function show(Product $product)
     {
-        $product = $productRepository->findOneBy(
-            [
-                'slug' => $slug,
-            ]
-        );
-
         if (!$product) {
             throw $this->createNotFoundException("Le produit demandé n'existe pas");
         }
