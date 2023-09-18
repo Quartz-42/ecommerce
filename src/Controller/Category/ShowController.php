@@ -3,9 +3,9 @@
 namespace App\Controller\Category;
 
 use App\Entity\Category;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ShowController extends AbstractController
 {
