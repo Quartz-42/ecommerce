@@ -28,7 +28,7 @@ class CreateController extends AbstractController
         }
 
         return $this->render('category/create.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 }

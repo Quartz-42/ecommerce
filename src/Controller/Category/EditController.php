@@ -27,7 +27,7 @@ class EditController extends AbstractController
         }
 
         return $this->render('category/edit.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 }

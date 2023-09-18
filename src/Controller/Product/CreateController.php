@@ -39,7 +39,7 @@ class CreateController extends AbstractController
         }
 
         return $this->render('product/create.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 }
