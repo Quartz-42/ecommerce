@@ -48,6 +48,7 @@ class RegistrationController extends AbstractController
                 ->context([
                     'expiration_date' => new \DateTime('+7 days'),
                     'mail' => $user->getEmail(),
+                    'id' => $user->getId(),
                 ]);
             $this->mailer->send($email);
 

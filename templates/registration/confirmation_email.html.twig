@@ -1,12 +1,15 @@
 <h1>Bienvenue à bord !</h1>
 <p>
-	Vous vous êtes inscrit avec l'adresse mail suivante :
+	Vous vous êtes inscrits sur notre site Home24.fr avec l'adresse mail suivante :
 </p>
 <p>
 	<code>{{ email.to[0].address }}</code>
 </p>
 <p>
-	<a href="https://www.localhost:8000/mail/verify/{{mail}}">Cliquez ici pour activer votre compte</a>
+	Prêt à embarquer pour de nouvelles aventures ? Cliquez sur le lien suivant pour valider votre compte :
+</p>
+<p>
+	<a href="https://www.localhost:8000/mail/verify/{{id}}">En route !</a>
 	(Attention : ce lien n'est valable que jusqu'au
 	{{ expiration_date|date('d/m/Y') }})
 </p>

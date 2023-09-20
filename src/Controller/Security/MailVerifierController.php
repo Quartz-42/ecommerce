@@ -9,12 +9,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MailVerifierController extends AbstractController
 {
-    #[Route('/mail/verify/{email}', name: 'app_verify_mail')]
-    public function verifyMail(UserRepository $userRepository, string $email): Response
+    #[Route('/mail/verify/{id}', name: 'app_verify_mail')]
+    public function verifyMail(UserRepository $userRepository, int $id): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        $user = $userRepository->findOneBy(['email' => $email]);
+        $user = $userRepository->findOneBy(['id' => $id]);
 
         if (!$user) {
             throw $this->createNotFoundException('Utilisateur non trouvé');
