@@ -4,25 +4,22 @@ namespace App\Controller\Security;
 
 use App\Entity\User;
 use App\Form\Type\RegistrationFormType;
-use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
-    private EmailVerifier $emailVerifier;
+    protected MailerInterface $mailer;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(MailerInterface $mailer)
     {
-        $this->emailVerifier = $emailVerifier;
+        $this->mailer = $mailer;
     }
 
     #[Route('/register', name: 'app_register')]
@@ -39,22 +36,23 @@ class RegistrationController extends AbstractController
                         $user,
                         $form->get('plainPassword')->getData()
                     )
-                )
-                ->setIsVerified(true);
+                );
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation(
-                'app_verify_email',
-                $user,
-                (new TemplatedEmail())
-                    ->from(new Address('benjamin.baroche@free.fr', 'E-bot'))
-                    ->to($user->getEmail())
-                    ->subject('Veuillez confirmer votre email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+            $email = (new TemplatedEmail())
+                ->from('benjamin.baroche@free.fr')
+                ->to($user->getEmail())
+                ->replyTo('contact@mail.com')
+                ->subject('Confirmez votre inscription')
+                ->text('Bonne nouvelles en vue !')
+                ->htmlTemplate('/registration/confirmation_email.html.twig')
+                ->context([
+                    'expiration_date' => new \DateTime('+7 days'),
+                    'mail' => $user->getEmail(),
+                ]);
+            $this->mailer->send($email);
 
             return $this->redirectToRoute('homepage');
         }
@@ -62,24 +60,5 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
         ]);
-    }
-
-    #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        // validate email confirmation link, sets User::isVerified=true and persists
-        try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-
-            return $this->redirectToRoute('app_register');
-        }
-
-        $this->addFlash('success', 'Votre adresse mail a bien été vérifiée.');
-
-        return $this->redirectToRoute('homepage');
     }
 }

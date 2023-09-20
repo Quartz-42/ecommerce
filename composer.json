@@ -16,7 +16,6 @@
         "liorchamla/faker-prices": "^2.0",
         "mbezhanov/faker-provider-collection": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.3",
-        "phpmailer/phpmailer": "^6.8",
         "phpstan/phpdoc-parser": "^1.20",
         "symfony/asset": "6.3.*",
         "symfony/console": "6.3.*",
