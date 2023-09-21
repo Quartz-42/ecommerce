@@ -21,28 +21,7 @@
 	<div class="row">
 		{% for product in category.products %}
 			<div class="col-3">
-				<div class="card">
-					<img src="{{ product.mainPicture }}" class="img-fluid" alt="image produit">
-					<div class="card-body">
-						<h2 class="card-title">{{ product.name }}
-						</h2>
-						<span>
-							{{ product.price /100 }}
-							€
-						</span>
-						<span class="badge badge-info">
-							{{ product.category.name }}
-						</span>
-						<p class="card-text">
-							{{ product.publicationDate|date("d/m/Y") }}
-						</p>
-						<p class="card-text">
-							{{ product.shortDescription }}
-						</p>
-						<a href="{{ path('product_show', {'category_slug': product.category.slug, 'slug': product.slug }) }}" class="btn btn-primary btn-sm">Détails du produit</a>
-						<a href="#" class="btn btn-success btn-sm">Ajouter au panier</a>
-					</div>
-				</div>
+				{% include 'shared/_product_card.html.twig' %}
 			</div>
 		{% endfor %}
 	</div>
