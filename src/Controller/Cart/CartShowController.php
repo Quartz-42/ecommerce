@@ -2,32 +2,21 @@
 
 namespace App\Controller\Cart;
 
-use App\Repository\ProductRepository;
+use App\Service\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CartShowController extends AbstractController
 {
     #[Route('/cart', name: 'cart_show')]
-    public function show(SessionInterface $session, ProductRepository $productRepository): Response
+    public function show(CartService $cartService): Response
     {
-        $detailedCart = [];
-        $total = 0;
+        $detailedCart = $cartService->getDetailedCartItems();
 
-        foreach ($session->get('cart', []) as $id => $quantity) {
-            $product = $productRepository->find($id);
+        $total = $cartService->getTotal();
 
-            $detailedCart[] = [
-                'product' => $productRepository->find($id),
-                'quantity' => $quantity,
-            ];
-
-            $total += ($product->getPrice() * $quantity) / 100;
-        }
-
-        return $this->render('cart/index.html.twig', [
+        return $this->render('cart/cart_view.html.twig', [
             'items' => $detailedCart,
             'total' => $total,
         ]);

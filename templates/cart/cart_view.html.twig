@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Votre panier - Home24.fr
+{% endblock %}
+
+{% block body %}
+	<h1>Votre panier</h1>
+	{% if items|length >0 %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Produit</th>
+					<th>Prix</th>
+					<th>Quantité</th>
+					<th>Total</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in items %}
+					<tr>
+						<td>{{ item.product.name }}</td>
+						<td>{{ item.product.price /100 }}
+							€</td>
+						<td>
+							<a href="{{ path('cart_add', {'id': item.product.id}) }}" class="btn btn-sm primary">
+								<i class="fas fa-plus"></i>
+							</a>
+							{{ item.quantity }}
+							<a href="{{ path('cart_decrement', {'id': item.product.id}) }}" class="btn btn-sm primary">
+								<i class="fas fa-minus"></i>
+							</a>
+						</td>
+						<td>{{ item.total }}
+							€</td>
+						<td>
+							<a href=" {{ path('cart_delete', {'id': item.product.id}) }}" class="btn btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr style="font-weight:bold">
+					<td colspan="3">Total :
+					</td>
+					<td colspan="2">
+						{{ total }}
+						€
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	{% else %}
+		<h2>Le panier est vide !</h2>
+	{% endif %}
+{% endblock %}
