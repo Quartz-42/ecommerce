@@ -2,14 +2,15 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Category;
-use App\Entity\Product;
-use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Entity\User;
+use App\Entity\Product;
+use App\Entity\Category;
+use App\Entity\Purchase;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -62,15 +63,36 @@ class AppFixtures extends Fixture
 
         $manager->persist($admin);
 
+        $users = [];
+
         for ($u = 0; $u < 5; ++$u) {
             $user = new User();
             $hash = $this->hasher->hashPassword($user, 'password');
             $user
-                ->setEmail('user'.$u.'@gmail.com')
+                ->setEmail('user' . $u . '@gmail.com')
                 ->setPassword($hash)
                 ->setIsVerified(true);
 
+            $users[] = $user;
+
             $manager->persist($user);
+        }
+
+        for ($p = 0; $p < 20; $p++) {
+            $purchase = new Purchase();
+            $purchase
+                ->setFullName($faker->name())
+                ->setAddress($faker->streetAddress)
+                ->setPostalCode($faker->postcode)
+                ->setCity($faker->city)
+                ->setUsers($faker->randomElement($users))
+                ->setTotal(mt_rand(2000, 300000));
+
+            if ($faker->boolean(90)) {
+                $purchase->setStatus(Purchase::STATUS_PAID);
+            }
+
+            $manager->persist($purchase);
         }
 
         $manager->flush();
