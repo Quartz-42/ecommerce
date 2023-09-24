@@ -14,28 +14,31 @@
 					</ul>
 				{% endfor %}
 				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a href="{{ path( 'app_register') }}" class="btn btn-warning">Inscription</a>
-					</li>
 					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						<li class="nav-item ms-4">
+							<a href=" {{ path('purchase_index') }}" class="btn btn-warning">Mes commandes</a>
+						</li>
 						<li class="nav-item ms-4">
 							<a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
 						</li>
+						<li class="nav-item ms-4">
+							<a href="{{ path('cart_show') }}" class="nav-link text-warning">
+								<i class="fas fa-shopping-cart"></i>
+								{% set totalQuantity = 0 %}
+								{% for item in cartService.detailedCartItems %}
+									{% set totalQuantity = totalQuantity + item.quantity %}
+								{% endfor %}
+								Panier ({{ totalQuantity }})
+							</a>
+						</li>
 					{% else %}
+						<li class="nav-item">
+							<a href="{{ path( 'app_register') }}" class="btn btn-warning">Inscription</a>
+						</li>
 						<li class="nav-item ms-4">
 							<a href="{{ path('app_login') }}" class="btn btn-success">Login</a>
 						</li>
 					{% endif %}
-					<li class="nav-item ms-4">
-						<a href="{{ path('cart_show') }}" class="nav-link text-warning">
-							<i class="fas fa-shopping-cart"></i>
-							{% set totalQuantity = 0 %}
-							{% for item in cartService.detailedCartItems %}
-								{% set totalQuantity = totalQuantity + item.quantity %}
-							{% endfor %}
-							Panier ({{ totalQuantity }})
-						</a>
-					</li>
 				</ul>
 			</div>
 		</div>
