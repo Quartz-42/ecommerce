@@ -31,7 +31,6 @@ class AppFixtures extends Fixture
         $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
         $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider($faker));
 
-
         $products = [];
 
         for ($c = 0; $c < 4; ++$c) {
@@ -74,7 +73,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $hash = $this->hasher->hashPassword($user, 'password');
             $user
-                ->setEmail('user' . $u . '@gmail.com')
+                ->setEmail('user'.$u.'@gmail.com')
                 ->setPassword($hash)
                 ->setIsVerified(true);
 
@@ -97,7 +96,7 @@ class AppFixtures extends Fixture
             $selectedProducts = $faker->randomElements($products, mt_rand(3, 5));
 
             foreach ($selectedProducts as $product) {
-                $purchaseItem = new PurchaseItem;
+                $purchaseItem = new PurchaseItem();
                 $purchaseItem
                     ->setProduct($product)
                     ->setProductQuantity(mt_rand(1, 4))

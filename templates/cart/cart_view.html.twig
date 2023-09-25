@@ -53,6 +53,17 @@
 				</tr>
 			</tfoot>
 		</table>
+		<br>
+		<hr>
+		<h2>Confirmez votre commande en remplissant ce formulaire</h2>
+		{{ form_start(confirmationForm, {'action': path('purchase_confirm') }) }}
+		{{ form_errors(confirmationForm) }}
+		{{ form_row(confirmationForm.fullName) }}
+		{{ form_row(confirmationForm.address) }}
+		{{ form_row(confirmationForm.postalCode) }}
+		{{ form_row(confirmationForm.city) }}
+		{{ form_row(confirmationForm.save )}}
+		{{ form_end(confirmationForm) }}
 	{% else %}
 		<h2>Le panier est vide !</h2>
 	{% endif %}

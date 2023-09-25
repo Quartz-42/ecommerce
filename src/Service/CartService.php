@@ -55,12 +55,15 @@ class CartService
                 continue;
             }
 
-            $total += ($product->getprice() * $quantity / 100);
+            $total += ($product->getprice() * $quantity);
         }
 
         return $total;
     }
 
+    /**
+     * @return array CartItem
+     */
     public function getDetailedCartItems(): array
     {
         $detailedCart = [];
