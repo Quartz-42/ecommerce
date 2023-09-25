@@ -98,7 +98,7 @@ class CartService
                 return;
             }
 
-            $cart[$id]--;
+            --$cart[$id];
 
             $this->saveCart($cart);
         }

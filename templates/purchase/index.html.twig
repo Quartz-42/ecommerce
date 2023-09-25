@@ -16,6 +16,7 @@
 				<th>Numéro</th>
 				<th>Adresse</th>
 				<th>Date de commande</th>
+				<th>Contenu</th>
 				<th>Statut</th>
 				<th>Total</th>
 			</tr>
@@ -31,6 +32,18 @@
 						{{ purchase.city }}
 					</td>
 					<td>{{ purchase.purchasedAt|date('d/m/Y') }}</td>
+					<td>
+						<ul style="list-style-type:none; padding:0; margin:0;">
+							{% for item in purchase.purchaseItems %}
+								<li>{{ item.productQuantity }}
+									x
+									{{ item.productName }}
+									{{ item.total }}
+									€
+								</li>
+							{% endfor %}
+						</ul>
+					</td>
 					<td>{{ purchase.status }}</td>
 					<td>{{ purchase.total /100 }}
 						€</td>
