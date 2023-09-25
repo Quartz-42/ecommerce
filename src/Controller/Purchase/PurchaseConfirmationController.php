@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PurchaseConfirmationController extends AbstractController
 {
-    protected $formFactory;
     protected $security;
     protected $cartService;
     protected $em;
@@ -76,6 +75,8 @@ class PurchaseConfirmationController extends AbstractController
         }
 
         $this->em->flush();
+
+        $this->cartService->empty();
 
         $this->addFlash('success', 'La commande a bien été enregistrée');
 
