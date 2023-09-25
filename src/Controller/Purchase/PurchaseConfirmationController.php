@@ -9,8 +9,6 @@ use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,9 +19,8 @@ class PurchaseConfirmationController extends AbstractController
     protected $cartService;
     protected $em;
 
-    public function __construct(FormFactoryInterface $formFactory, Security $security, CartService $cartService, EntityManagerInterface $em)
+    public function __construct(Security $security, CartService $cartService, EntityManagerInterface $em)
     {
-        $this->formFactory = $formFactory;
         $this->security = $security;
         $this->cartService = $cartService;
         $this->em = $em;
@@ -32,7 +29,7 @@ class PurchaseConfirmationController extends AbstractController
     #[Route('/purchase/confirm', name: 'purchase_confirm')]
     public function confirm(Request $request)
     {
-        $form = $this->formFactory->create(CartConfirmationType::class);
+        $form = $this->createForm(CartConfirmationType::class);
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
@@ -41,10 +38,11 @@ class PurchaseConfirmationController extends AbstractController
             return $this->redirectToRoute('cart_show');
         }
 
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         if (!$user) {
-            throw new AccessDeniedException('Vous devez être connecté pour valider votre commande');
+            $this->addFlash('warning', 'Vous devez posséder un compte et être connecté pour valider votre commande');
+            return $this->redirectToRoute('cart_show');
         }
 
         $cartItems = $this->cartService->getDetailedCartItems();
