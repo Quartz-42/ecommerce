@@ -4,25 +4,29 @@ namespace App\Controller\Purchase;
 
 use App\Entity\Purchase;
 use App\Entity\PurchaseItem;
-use App\Form\Type\CartConfirmationType;
 use App\Service\CartService;
+use App\Form\Type\CartConfirmationType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PurchaseConfirmationController extends AbstractController
 {
     protected $security;
     protected $cartService;
     protected $em;
+    protected MailerInterface $mailer;
 
-    public function __construct(Security $security, CartService $cartService, EntityManagerInterface $em)
+    public function __construct(Security $security, CartService $cartService, EntityManagerInterface $em, MailerInterface $mailer)
     {
         $this->security = $security;
         $this->cartService = $cartService;
         $this->em = $em;
+        $this->mailer = $mailer;
     }
 
     #[Route('/purchase/confirm', name: 'purchase_confirm')]
@@ -37,10 +41,11 @@ class PurchaseConfirmationController extends AbstractController
             return $this->redirectToRoute('cart_show');
         }
 
+        /** @var \App\Entity\User $user */
         $user = $this->getUser();
 
         if (!$user) {
-            $this->addFlash('warning', 'Vous devez posséder un compte et être connecté pour valider votre commande');
+            $this->addFlash('warning', 'Vous devez être connecté pour valider votre commande');
             return $this->redirectToRoute('cart_show');
         }
 
@@ -51,7 +56,7 @@ class PurchaseConfirmationController extends AbstractController
             return $this->redirectToRoute('cart_show');
         }
 
-        /** @var Purchase */
+        /** @var \App\Entity\Purchase $purchase */
         $purchase = $form->getData();
 
         $purchase
@@ -72,9 +77,24 @@ class PurchaseConfirmationController extends AbstractController
                 ->setProductPrice($cartItem->product->getPrice());
 
             $this->em->persist($purchaseItem);
+            $purchasedItems[] = $purchaseItem;
         }
 
         $this->em->flush();
+
+        $email = (new TemplatedEmail())
+            ->from('benjamin.baroche@free.fr')
+            ->to($user->getEmail())
+            ->replyTo('contact@mail.com')
+            ->subject('Confirmation de votre commande')
+            ->text('Bonne nouvelles en vue !')
+            ->htmlTemplate('/purchase/purchase_confirmation_email.html.twig')
+            ->context([
+                'purchasedItems' => $purchasedItems,
+                'purchase' => $purchase,
+            ]);
+
+        $this->mailer->send($email);
 
         $this->cartService->empty();
 

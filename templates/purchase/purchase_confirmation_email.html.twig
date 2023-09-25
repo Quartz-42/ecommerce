@@ -1,0 +1,31 @@
+<h1>Confirmation de votre commande</h1>
+<p>Vous venez de passer une commande sur Home24.fr et nous vous en remercions.</p>
+<p>Vous trouverez ci-dessous le récapitulatif de votre commande :</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Produit</th>
+			<th>Prix</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for p in purchasedItems %}
+			<tr>
+				<td>
+					{{ p.productName }}
+					x
+					{{ p.productQuantity}}
+				</td>
+				<td>
+					{{ p.productPrice /100 }}
+					€
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<p>Total de votre commande :
+	{{ purchase.total /100 }}
+	€
+</p>
+<p style='font-weight:bold'>Nous vous remercions pour votre confiance !</p>
