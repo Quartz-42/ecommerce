@@ -2,17 +2,16 @@
 
 namespace App\Controller\Purchase;
 
-use App\Entity\Purchase;
 use App\Entity\PurchaseItem;
-use App\Service\CartService;
 use App\Form\Type\CartConfirmationType;
+use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PurchaseConfirmationController extends AbstractController
 {
@@ -46,6 +45,7 @@ class PurchaseConfirmationController extends AbstractController
 
         if (!$user) {
             $this->addFlash('warning', 'Vous devez être connecté pour valider votre commande');
+
             return $this->redirectToRoute('cart_show');
         }
 
@@ -93,6 +93,8 @@ class PurchaseConfirmationController extends AbstractController
                 'purchasedItems' => $purchasedItems,
                 'purchase' => $purchase,
             ]);
+
+        dd($purchasedItems);
 
         $this->mailer->send($email);
 
