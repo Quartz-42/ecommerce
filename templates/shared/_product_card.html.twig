@@ -4,17 +4,14 @@
 	<img
 	src="{{ product.mainPicture }}" class="img-fluid" alt="image produit">
 	{#} Gestion des "vrais" images en production
-	<img src="{{ asset('uploads/products_image/'~ product.mainPicture) }}" class="img-fluid" alt="image produit">
-	{#}
+		<img src="{{ asset('uploads/products_image/'~ product.mainPicture) }}" class="img-fluid" alt="image produit">
+		{#}
 	<div class="card-body">
 		<h4 class="card-title">{{ product.name }}
 			-
 			{{ product.price /100 }}
 			€
 		</h4>
-		<a href="{{ path('product_category', {'slug': product.category.slug }) }}">
-			{{ product.category.name }}
-		</a>
 		<p class="card-text">{{ product.publicationDate|date("d/m/Y") }}</p>
 		<p class="card-text">{{ product.shortDescription }}</p>
 		<a href="{{ path('product_show', {'category_slug': product.category.slug, 'slug': product.slug }) }}" class="btn btn-primary btn-sm">

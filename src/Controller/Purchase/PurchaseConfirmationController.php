@@ -87,21 +87,17 @@ class PurchaseConfirmationController extends AbstractController
             ->to($user->getEmail())
             ->replyTo('contact@mail.com')
             ->subject('Confirmation de votre commande')
-            ->text('Bonne nouvelles en vue !')
+            ->text('Bonne nouvelle en vue !')
             ->htmlTemplate('/purchase/purchase_confirmation_email.html.twig')
             ->context([
                 'purchasedItems' => $purchasedItems,
                 'purchase' => $purchase,
             ]);
 
-        dd($purchasedItems);
-
         $this->mailer->send($email);
 
-        $this->cartService->empty();
-
-        $this->addFlash('success', 'La commande a bien été enregistrée');
-
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('purchase_payment_form', [
+            'id' => $purchase->getId(),
+        ]);
     }
 }

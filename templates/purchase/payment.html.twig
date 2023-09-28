@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Payez votre commande avec Stripe
+{% endblock %}
+
+{% block body %}
+	<h1>Payez votre commande avec Stripe</h1>
+	<!-- Display a payment form -->
+	<form id="payment-form">
+		<div
+			id="link-authentication-element"><!--Stripe.js injects the Link Authentication Element-->
+		</div>
+		<div
+			id="payment-element"><!--Stripe.js injects the Payment Element-->
+		</div>
+		<button id="submit" class="btn btn-success">
+			<div class="spinner hidden" id="spinner"></div>
+			<span id="button-text">Payer votre commande</span>
+		</button>
+		<div id="payment-message" class="hidden"></div>
+	</form>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="https://js.stripe.com/v3/"></script>
+	<script>
+		const clientSecret = '{{ clientSecret }}';
+const stripePublicKey = "pk_test_51Nuvx7LBiSBap6dTELycQx5ztdliBcqQoUqfxSxvrNTfTYwMbnEmGybbogjUpleB1LuUNho8jWQQZS7jD1wd2mhN00xQerpdXi";
+const redirectAfterSuccessUrl = "{{ url('purchase_success', {'id': purchase.id}) }}";
+	</script>
+	<script src="/js/payment.js"></script>
+{% endblock %}
