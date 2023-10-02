@@ -2,11 +2,10 @@
 
 namespace App\Controller\Purchase;
 
-use Stripe\Stripe;
 use App\Entity\Purchase;
+use App\Service\StripeService;
 use App\Repository\PurchaseRepository;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -15,9 +14,10 @@ class PurchasePaymentController extends AbstractController
     #[Route('/purchase/pay/{id}', name: 'purchase_payment_form')]
     #[IsGranted('ROLE_USER')]
 
-    public function showCardForm(int $id, PurchaseRepository $purchaseRepository)
+    public function showCardForm(int $id, PurchaseRepository $purchaseRepository, StripeService $stripeService)
     {
         $purchase = $purchaseRepository->find($id);
+        $clientSecret = "sk_test_51Nuvx7LBiSBap6dTQ6ZjhjNisY1onrlrR7KkKPm7vBzNIhadx76ykDIFxhoGyERLfh9kO8RmrYTJGMcWKPmwIMGw001BdQvlE7";
 
         if (
             !$purchase
@@ -29,17 +29,11 @@ class PurchasePaymentController extends AbstractController
             return $this->redirectToRoute('purchase_index');
         }
 
-        Stripe::setApiKey($this->getParameter("stripe_secret_key"));
+        $paymentIntent = $stripeService->getPaymentIntent($purchase);
 
-        $checkout_session = \Stripe\Checkout\Session::create([
-            'line_items' => [[
-                'price' => $purchase->getId(),
-                'quantity' => $purchase->getTotal(),
-            ]],
-            'mode' => 'payment',
-            'success_url' => 'https://localhost:800/purchase/terminate/' . $purchase->getId(),
-            'cancel_url' => 'https://localhost:800/purchase/cancel',
+        return $this->render('/purchase/payment.html.twig', [
+            'clientSecret' => $clientSecret,
+            'purchase' => $purchase,
         ]);
-        return new RedirectResponse($checkout_session->url);
     }
 }

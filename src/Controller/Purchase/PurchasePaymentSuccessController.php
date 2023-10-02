@@ -3,21 +3,20 @@
 namespace App\Controller\Purchase;
 
 use App\Entity\Purchase;
-use App\Service\StripeService;
+use App\Service\CartService;
 use App\Repository\PurchaseRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class PurchasePaymentController extends AbstractController
+class PurchasePaymentSuccessController extends AbstractController
 {
-    #[Route('/purchase/pay/{id}', name: 'purchase_payment_form')]
+    #[Route('/purchase/terminate/{id}', name: 'purchase_success')]
     #[IsGranted('ROLE_USER')]
-
-    public function showCardForm(int $id, PurchaseRepository $purchaseRepository, StripeService $stripeService)
+    public function success($id, PurchaseRepository $purchaseRepository, EntityManagerInterface $em, CartService $cartService)
     {
         $purchase = $purchaseRepository->find($id);
-        $clientSecret = "sk_test_51Nuvx7LBiSBap6dTQ6ZjhjNisY1onrlrR7KkKPm7vBzNIhadx76ykDIFxhoGyERLfh9kO8RmrYTJGMcWKPmwIMGw001BdQvlE7";
 
         if (
             !$purchase
@@ -29,11 +28,14 @@ class PurchasePaymentController extends AbstractController
             return $this->redirectToRoute('purchase_index');
         }
 
-        $paymentIntent = $stripeService->getPaymentIntent($purchase);
+        $purchase->setStatus(Purchase::STATUS_PAID);
 
-        return $this->render('/purchase/payment.html.twig', [
-            'clientSecret' => $clientSecret,
-            'purchase' => $purchase,
-        ]);
+        $em->flush();
+
+        $cartService->empty();
+
+        $this->addFlash('success', 'La commande a bien été payée');
+
+        return $this->redirectToRoute('purchase_index');
     }
 }
