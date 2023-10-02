@@ -10,9 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ShowController extends AbstractController
 {
     #[Route('/{category_slug}/{slug}', name: 'product_show', priority: -1)]
-    public function show(Product $product, $prenom, Request $request)
+    public function show(Product $product)
     {
-        dd($prenom);
         if (!$product) {
             throw $this->createNotFoundException("Le produit demandé n'existe pas");
         }

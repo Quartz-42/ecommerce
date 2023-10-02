@@ -19,9 +19,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\EventDispatcher\PrenomListener:
-        tags: 
-        - { name: kernel.event_listener, event: kernel.request, method: addPrenomToAttributes }
+    # App\EventDispatcher\PrenomSubscriber:
+    #     tags: 
+    #     - { name: kernel.event_subscriber, event: kernel.request, method: addPrenomToAttributes }
+    #     - { name: kernel.event_subscriber, event: kernel.controller, method: test1 }
+    #     - { name: kernel.event_subscriber, event: kernel.response, method: test2 }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
