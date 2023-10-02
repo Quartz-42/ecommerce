@@ -4,8 +4,6 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    stripe_secret_key: '%env(STRIPE_SECRET)%'
-    stripe_public_key: '%env(STRIPE_PUBLIC)%'
     
 services:
     # default configuration for services in *this* file
@@ -20,6 +18,10 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    App\EventDispatcher\PrenomListener:
+        tags: 
+        - { name: kernel.event_listener, event: kernel.request, method: addPrenomToAttributes }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -7,23 +7,23 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CartService
 {
-    protected $session;
+    protected $requestStack;
     protected $productRepository;
 
     public function __construct(RequestStack $requestStack, ProductRepository $productRepository)
     {
-        $this->session = $requestStack->getSession();
+        $this->requestStack = $requestStack;
         $this->productRepository = $productRepository;
     }
 
     protected function getCart(): array
     {
-        return $this->session->get('cart', []);
+        return $this->requestStack->getSession()->get('cart', []);
     }
 
     protected function saveCart(array $cart)
     {
-        return $this->session->set('cart', $cart);
+        return $this->requestStack->getSession()->set('cart', $cart);
     }
 
     public function add(int $id)

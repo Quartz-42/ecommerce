@@ -3,14 +3,16 @@
 namespace App\Controller\Product;
 
 use App\Entity\Product;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ShowController extends AbstractController
 {
     #[Route('/{category_slug}/{slug}', name: 'product_show', priority: -1)]
-    public function show(Product $product)
+    public function show(Product $product, $prenom, Request $request)
     {
+        dd($prenom);
         if (!$product) {
             throw $this->createNotFoundException("Le produit demandé n'existe pas");
         }
