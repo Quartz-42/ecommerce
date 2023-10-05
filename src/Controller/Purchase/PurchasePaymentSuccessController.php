@@ -5,13 +5,13 @@ namespace App\Controller\Purchase;
 use App\Entity\Purchase;
 use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PurchasePaymentSuccessController extends AbstractController
 {
-    #[Route('/purchase/terminate/{id}', name: 'purchase_success')]
+    #[Route('/purchase/terminate/{id}', name: 'purchase_payment_success')]
     #[IsGranted('ROLE_USER')]
     public function success(Purchase $purchase, EntityManagerInterface $em, CartService $cartService)
     {
