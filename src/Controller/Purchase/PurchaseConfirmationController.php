@@ -59,10 +59,7 @@ class PurchaseConfirmationController extends AbstractController
         /** @var \App\Entity\Purchase $purchase */
         $purchase = $form->getData();
 
-        $purchase
-            ->setUsers($user)
-            ->setPurchasedAt(\DateTimeImmutable::createFromMutable(new \DateTime()))
-            ->setTotal($this->cartService->getTotal());
+        $purchase->setUsers($user);
 
         $this->em->persist($purchase);
 
