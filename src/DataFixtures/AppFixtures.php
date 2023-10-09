@@ -36,8 +36,8 @@ class AppFixtures extends Fixture
         for ($c = 0; $c < 4; ++$c) {
             $category = new Category();
             $category
-                ->setName($faker->department)
-                ->setSlug(strtolower($this->slugger->slug($category->getName())));
+                ->setName($faker->department);
+            // ->setSlug(strtolower($this->slugger->slug($category->getName())));
 
             $manager->persist($category);
 
@@ -73,7 +73,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $hash = $this->hasher->hashPassword($user, 'password');
             $user
-                ->setEmail('user'.$u.'@gmail.com')
+                ->setEmail('user' . $u . '@gmail.com')
                 ->setPassword($hash)
                 ->setIsVerified(true);
 
