@@ -17,15 +17,13 @@
 					{{ p.productQuantity}}
 				</td>
 				<td>
-					{{ p.productPrice /100 }}
-					€
+					{{ p.productPrice|amount }}
 				</td>
 			</tr>
 		{% endfor %}
 	</tbody>
 </table>
 <p>Total de votre commande :
-	{{ purchase.total /100 }}
-	€
+	{{ purchase.total|amount }}
 </p>
 <p style='font-weight:bold'>Nous vous remercions pour votre confiance !</p>

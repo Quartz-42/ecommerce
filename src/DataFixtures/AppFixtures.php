@@ -73,7 +73,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $hash = $this->hasher->hashPassword($user, 'password');
             $user
-                ->setEmail('user'.$u.'@gmail.com')
+                ->setEmail('user' . $u . '@gmail.com')
                 ->setPassword($hash)
                 ->setIsVerified(true);
 
@@ -102,7 +102,7 @@ class AppFixtures extends Fixture
                     ->setProductQuantity(mt_rand(1, 4))
                     ->setProductName($product->getName())
                     ->setProductPrice($product->getPrice())
-                    ->setTotal($purchaseItem->getProductPrice() * $purchaseItem->getProductQuantity() / 100)
+                    ->setTotal($purchaseItem->getProductPrice() * $purchaseItem->getProductQuantity())
                     ->setPurchase($purchase);
 
                 $manager->persist($purchaseItem);

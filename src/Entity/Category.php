@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  *
- * @ORM\EntityListeners({CategoryListener::class})
+ * @ORM\EntityListeners({CategorySlugListener::class})
  */
 class Category
 {
