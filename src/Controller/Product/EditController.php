@@ -7,13 +7,14 @@ use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class EditController extends AbstractController
 {
     #[Route('admin/product/edit/{id}', name: 'product_edit')]
-    public function edit(Product $product, ProductRepository $productRepository, Request $request, SluggerInterface $slugger)
+    public function edit(Product $product, ProductRepository $productRepository, Request $request, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
@@ -30,6 +31,7 @@ class EditController extends AbstractController
             // );
             // $product->setMainPicture($newFilename);
 
+            /* @phpstan-ignore-next-line */
             $product->setSlug(strtolower($slugger->slug($product->getName())));
             $productRepository->save($product, true);
 

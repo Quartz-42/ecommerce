@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CartAddController extends AbstractController
 {
     #[Route('/cart/add/{id}', name: 'cart_add', requirements: ['id' => '\d+'])]
-    public function add($id, ProductRepository $productRepository, CartService $cartService): Response
+    public function add(int $id, ProductRepository $productRepository, CartService $cartService): Response
     {
         // sécurisation du panier
         $product = $productRepository->find($id);

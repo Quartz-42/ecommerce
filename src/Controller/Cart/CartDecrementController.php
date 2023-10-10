@@ -5,12 +5,13 @@ namespace App\Controller\Cart;
 use App\Repository\ProductRepository;
 use App\Service\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CartDecrementController extends AbstractController
 {
     #[Route('/cart/decrement/{id}', name: 'cart_decrement', requirements: ['id' => '\d+'])]
-    public function decrement($id, CartService $cartService, ProductRepository $productRepository)
+    public function decrement(int $id, CartService $cartService, ProductRepository $productRepository): RedirectResponse
     {
         $product = $productRepository->find($id);
 

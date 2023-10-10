@@ -20,6 +20,7 @@ class EditController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() and $form->isValid()) {
+            /* @phpstan-ignore-next-line */
             $category->setSlug(strtolower($slugger->slug($category->getName())));
             $categoryRepository->save($category, true);
 

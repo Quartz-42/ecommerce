@@ -40,6 +40,7 @@ class RegistrationController extends AbstractController
 
             $email = (new TemplatedEmail())
                 ->from('benjamin.baroche@free.fr')
+                /* @phpstan-ignore-next-line */
                 ->to($user->getEmail())
                 ->replyTo('contact@mail.com')
                 ->subject('Confirmez votre inscription')

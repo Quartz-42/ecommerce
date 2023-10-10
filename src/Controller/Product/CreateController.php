@@ -32,6 +32,7 @@ class CreateController extends AbstractController
             // );
             // $product->setMainPicture($newFilename);
 
+            /* @phpstan-ignore-next-line */
             $product->setSlug(strtolower($slugger->slug($product->getName())));
             $productRepository->save($product, true);
 

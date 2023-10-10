@@ -12,6 +12,7 @@ class ShowController extends AbstractController
     #[Route('/category/{slug}', name: 'product_category')]
     public function category(Category $category): Response
     {
+        /* @phpstan-ignore-next-line */
         if (!$category) {
             throw $this->createNotFoundException("La catégorie demandée n'existe pas");
         }

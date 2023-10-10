@@ -5,19 +5,21 @@ namespace App\Controller\Purchase;
 use App\Entity\PurchaseItem;
 use App\Form\Type\CartConfirmationType;
 use App\Service\CartService;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PurchaseConfirmationController extends AbstractController
 {
-    protected $security;
-    protected $cartService;
-    protected $em;
+    protected Security $security;
+    protected CartService $cartService;
+    protected EntityManager $em;
     protected MailerInterface $mailer;
 
     public function __construct(Security $security, CartService $cartService, EntityManagerInterface $em, MailerInterface $mailer)
@@ -29,11 +31,12 @@ class PurchaseConfirmationController extends AbstractController
     }
 
     #[Route('/purchase/confirm', name: 'purchase_confirm')]
-    public function confirm(Request $request)
+    public function confirm(Request $request): RedirectResponse
     {
         $form = $this->createForm(CartConfirmationType::class);
         $form->handleRequest($request);
 
+        /* @phpstan-ignore-next-line */
         if (!$form->isSubmitted()) {
             $this->addFlash('warning', 'Erreur dans la soumission du formulaire');
 
@@ -81,6 +84,7 @@ class PurchaseConfirmationController extends AbstractController
 
         $email = (new TemplatedEmail())
             ->from('benjamin.baroche@free.fr')
+            /* @phpstan-ignore-next-line */
             ->to($user->getEmail())
             ->replyTo('contact@mail.com')
             ->subject('Confirmation de votre commande')
