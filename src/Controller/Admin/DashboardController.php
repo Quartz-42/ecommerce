@@ -24,7 +24,8 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linkToDashboard('Home', 'fa fa-home'),
+            MenuItem::linkToDashboard('Accueil Admin', 'fa fa-home'),
+            MenuItem::linkToRoute('Retour site', 'fa fa-arrow-left', 'homepage'),
             MenuItem::section('ECommerce'),
             MenuItem::linkToCrud('Category', 'fa fa-file-text', Category::class),
             MenuItem::linkToCrud('Product', 'fa fa-file-text', Product::class),

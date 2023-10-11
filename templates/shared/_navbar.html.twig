@@ -39,6 +39,14 @@
 							Panier ({{ totalQuantity }})
 						</a>
 					</li>
+					{% if is_granted('ROLE_ADMIN') %}
+						<li class="nav-item ms-4">
+							<a href="{{ path ('admin') }}" class="nav-link text-danger">
+								<i class="fas fa-star"></i>
+								Accés admin
+							</a>
+						</li>
+					{% endif %}
 				</ul>
 			</div>
 		</div>
