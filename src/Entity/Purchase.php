@@ -44,6 +44,9 @@ class Purchase
     private ?\DateTimeImmutable $purchasedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'purchase', targetEntity: PurchaseItem::class, orphanRemoval: true)]
+    /**
+     * @var Collection<Purchaseitem>
+     */
     private Collection $purchaseItems;
 
     public function __construct()
@@ -183,7 +186,7 @@ class Purchase
     }
 
     #[ORM\PrePersist]
-    public function prePersist()
+    public function prePersist(): void
     {
         if (empty($this->purchasedAt)) {
             $this->purchasedAt = \DateTimeImmutable::createFromMutable(new \DateTime());
@@ -191,7 +194,7 @@ class Purchase
     }
 
     #[ORM\PreFlush]
-    public function preFlush()
+    public function preFlush(): void
     {
         $total = 0;
 

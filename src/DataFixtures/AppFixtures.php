@@ -15,8 +15,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
-    protected $slugger;
-    protected $hasher;
+    protected SluggerInterface $slugger;
+    protected UserPasswordHasherInterface $hasher;
 
     public function __construct(SluggerInterface $slugger, UserPasswordHasherInterface $hasher)
     {
@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
         for ($c = 0; $c < 4; ++$c) {
             $category = new Category();
             $category
-                ->setName($faker->department);
+                ->setName($faker->department); /* @phpstan-ignore-line */
             // ->setSlug(strtolower($this->slugger->slug($category->getName())));
 
             $manager->persist($category);
@@ -44,9 +44,9 @@ class AppFixtures extends Fixture
             for ($p = 0; $p < 30; ++$p) {
                 $product = new Product();
                 $product
-                    ->setName($faker->productName)
-                    ->setPrice($faker->price(4000, 20000))
-                    ->setSlug(strtolower($this->slugger->slug($product->getName())))
+                    ->setName($faker->productName) /* @phpstan-ignore-line */
+                    ->setPrice($faker->price(4000, 20000)) /* @phpstan-ignore-line */
+                    ->setSlug(strtolower($this->slugger->slug($product->getName()))) /* @phpstan-ignore-line */
                     ->setCategory($category)
                     ->setShortDescription($faker->paragraph(3, false))
                     ->setMainPicture($faker->imageUrl(400, 400, true))
@@ -73,7 +73,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $hash = $this->hasher->hashPassword($user, 'password');
             $user
-                ->setEmail('user'.$u.'@gmail.com')
+                ->setEmail('user' . $u . '@gmail.com')
                 ->setPassword($hash)
                 ->setIsVerified(true);
 

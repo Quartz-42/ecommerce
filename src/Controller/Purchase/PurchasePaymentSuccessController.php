@@ -19,8 +19,8 @@ class PurchasePaymentSuccessController extends AbstractController
         if (
             /* @phpstan-ignore-next-line */
             !$purchase
-            || ($purchase && $purchase->getUsers() !== $this->getUser()
-                || ($purchase && Purchase::STATUS_PAID === $purchase->getStatus()))
+            || ($purchase && $purchase->getUsers() !== $this->getUser() /* @phpstan-ignore-line */
+                || ($purchase && Purchase::STATUS_PAID === $purchase->getStatus())) /* @phpstan-ignore-line */
         ) {
             $this->addFlash('warning', 'La commande n\'existe pas');
 

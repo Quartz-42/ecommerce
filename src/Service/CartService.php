@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class CartService
 {
-    protected $requestStack;
-    protected $productRepository;
+    protected RequestStack $requestStack;
+    protected ProductRepository $productRepository;
 
     public function __construct(RequestStack $requestStack, ProductRepository $productRepository)
     {
@@ -55,7 +55,7 @@ class CartService
                 continue;
             }
 
-            $total += ($product->getprice() * $quantity);
+            $total += ($product->getPrice() * $quantity);
         }
 
         return $total;
@@ -81,7 +81,7 @@ class CartService
         return $detailedCart;
     }
 
-    public function remove(int $id)
+    public function remove(int $id): void
     {
         $cart = $this->getCart();
 
@@ -90,7 +90,7 @@ class CartService
         $this->saveCart($cart);
     }
 
-    public function decrement(int $id)
+    public function decrement(int $id): void
     {
         $cart = $this->getCart();
 
@@ -107,7 +107,7 @@ class CartService
         }
     }
 
-    public function empty()
+    public function empty(): void
     {
         $this->saveCart([]);
     }

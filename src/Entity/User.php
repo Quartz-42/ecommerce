@@ -23,16 +23,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private ?string $email;
 
+    /**
+     * @var string[]
+     */
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     #[ORM\Column(type: 'string')]
     private string $password;
 
+    /**
+     * @var boolean
+     */
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Purchase::class)]
+    /**
+     * @var Collection<Purchase>
+     */
     private Collection $purchases;
 
     public function __construct()

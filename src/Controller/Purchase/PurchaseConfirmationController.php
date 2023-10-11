@@ -19,7 +19,7 @@ class PurchaseConfirmationController extends AbstractController
 {
     protected Security $security;
     protected CartService $cartService;
-    protected EntityManager $em;
+    protected EntityManagerInterface $em;
     protected MailerInterface $mailer;
 
     public function __construct(Security $security, CartService $cartService, EntityManagerInterface $em, MailerInterface $mailer)
@@ -36,7 +36,7 @@ class PurchaseConfirmationController extends AbstractController
         $form = $this->createForm(CartConfirmationType::class);
         $form->handleRequest($request);
 
-        /* @phpstan-ignore-next-line */
+
         if (!$form->isSubmitted()) {
             $this->addFlash('warning', 'Erreur dans la soumission du formulaire');
 
@@ -91,7 +91,7 @@ class PurchaseConfirmationController extends AbstractController
             ->text('Bonne nouvelle en vue !')
             ->htmlTemplate('/purchase/purchase_confirmation_email.html.twig')
             ->context([
-                'purchasedItems' => $purchasedItems,
+                'purchasedItems' => $purchasedItems, /* @phpstan-ignore-line */
                 'purchase' => $purchase,
             ]);
 

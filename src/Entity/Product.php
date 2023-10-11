@@ -38,6 +38,9 @@ class Product
     private ?\DateTimeInterface $publicationDate = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: PurchaseItem::class)]
+    /**
+     * @var Collection<PurchaseItem>
+     */
     private Collection $purchaseItems;
 
     public function __construct()

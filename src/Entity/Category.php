@@ -27,6 +27,9 @@ class Category
     private ?string $slug = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
+    /**
+     * @var Collection<string,Product>
+     */
     private Collection $products;
 
     public function __construct()
