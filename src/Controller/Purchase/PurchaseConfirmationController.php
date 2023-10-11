@@ -4,15 +4,13 @@ namespace App\Controller\Purchase;
 
 use App\Entity\PurchaseItem;
 use App\Form\Type\CartConfirmationType;
+use App\Mailer\ConfirmationMail;
 use App\Service\CartService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PurchaseConfirmationController extends AbstractController
@@ -20,22 +18,19 @@ class PurchaseConfirmationController extends AbstractController
     protected Security $security;
     protected CartService $cartService;
     protected EntityManagerInterface $em;
-    protected MailerInterface $mailer;
 
-    public function __construct(Security $security, CartService $cartService, EntityManagerInterface $em, MailerInterface $mailer)
+    public function __construct(Security $security, CartService $cartService, EntityManagerInterface $em)
     {
         $this->security = $security;
         $this->cartService = $cartService;
         $this->em = $em;
-        $this->mailer = $mailer;
     }
 
     #[Route('/purchase/confirm', name: 'purchase_confirm')]
-    public function confirm(Request $request): RedirectResponse
+    public function confirm(Request $request, ConfirmationMail $confirmationMail): RedirectResponse
     {
         $form = $this->createForm(CartConfirmationType::class);
         $form->handleRequest($request);
-
 
         if (!$form->isSubmitted()) {
             $this->addFlash('warning', 'Erreur dans la soumission du formulaire');
@@ -82,20 +77,8 @@ class PurchaseConfirmationController extends AbstractController
 
         $this->em->flush();
 
-        $email = (new TemplatedEmail())
-            ->from('benjamin.baroche@free.fr')
-            /* @phpstan-ignore-next-line */
-            ->to($user->getEmail())
-            ->replyTo('contact@mail.com')
-            ->subject('Confirmation de votre commande')
-            ->text('Bonne nouvelle en vue !')
-            ->htmlTemplate('/purchase/purchase_confirmation_email.html.twig')
-            ->context([
-                'purchasedItems' => $purchasedItems, /* @phpstan-ignore-line */
-                'purchase' => $purchase,
-            ]);
-
-        $this->mailer->send($email);
+        /**envoi de mail */
+        $confirmationMail->sendConfirmationMail($user->getEmail(), $purchasedItems, $purchase);
 
         return $this->redirectToRoute('purchase_payment_form', [
             'id' => $purchase->getId(),

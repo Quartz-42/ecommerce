@@ -49,6 +49,7 @@ class CartService
         $total = 0;
 
         foreach ($this->getCart() as $id => $quantity) {
+            /** @var \App\Entity\Product $product */
             $product = $this->productRepository->find($id);
 
             if (!$product) {

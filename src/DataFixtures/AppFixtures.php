@@ -73,7 +73,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $hash = $this->hasher->hashPassword($user, 'password');
             $user
-                ->setEmail('user' . $u . '@gmail.com')
+                ->setEmail('user'.$u.'@gmail.com')
                 ->setPassword($hash)
                 ->setIsVerified(true);
 

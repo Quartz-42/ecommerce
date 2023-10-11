@@ -4,26 +4,18 @@ namespace App\Controller\Security;
 
 use App\Entity\User;
 use App\Form\Type\RegistrationFormType;
+use App\Mailer\RegistrationMail;
 use App\Repository\UserRepository;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
-    protected MailerInterface $mailer;
-
-    public function __construct(MailerInterface $mailer)
-    {
-        $this->mailer = $mailer;
-    }
-
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository, RegistrationMail $registrationMail): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -38,20 +30,8 @@ class RegistrationController extends AbstractController
             );
             $userRepository->save($user, true);
 
-            $email = (new TemplatedEmail())
-                ->from('benjamin.baroche@free.fr')
-                /* @phpstan-ignore-next-line */
-                ->to($user->getEmail())
-                ->replyTo('contact@mail.com')
-                ->subject('Confirmez votre inscription')
-                ->text('Bonne nouvelles en vue !')
-                ->htmlTemplate('/registration/confirmation_email.html.twig')
-                ->context([
-                    'expiration_date' => new \DateTime('+7 days'),
-                    'mail' => $user->getEmail(),
-                    'id' => $user->getId(),
-                ]);
-            $this->mailer->send($email);
+            /**envoi de mail */
+            $registrationMail->sendRegisterMail($user->getEmail(), $user->getId());
 
             return $this->redirectToRoute('homepage');
         }

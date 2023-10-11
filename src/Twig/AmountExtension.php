@@ -19,6 +19,6 @@ class AmountExtension extends AbstractExtension
         $finalValue = $value / 100;
         $finalValue = number_format($finalValue, 2, $decimalSeparator, $thousandSeparator);
 
-        return $finalValue . ' ' . $symbol;
+        return $finalValue.' '.$symbol;
     }
 }
