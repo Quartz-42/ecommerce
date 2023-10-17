@@ -4,14 +4,14 @@ namespace App\Controller\Admin;
 
 use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -32,8 +32,8 @@ class ProductCrudController extends AbstractCrudController
                 ->setBasePath('/uploads')
                 ->setUploadDir('/public/uploads')
                 ->setUploadedFileNamePattern('[slug].[extension]')
-                ->setRequired($pageName !== Crud::PAGE_EDIT)
-                ->setFormTypeOptions($pageName == Crud::PAGE_EDIT ? ['allow_delete' => false] : []),
+                ->setRequired(Crud::PAGE_EDIT !== $pageName)
+                ->setFormTypeOptions(Crud::PAGE_EDIT == $pageName ? ['allow_delete' => false] : []),
             DateTimeField::new('publication_date')
                 ->setTimezone('Europe/Paris')
                 ->setFormTypeOption('model_timezone', 'UTC')

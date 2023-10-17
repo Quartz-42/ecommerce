@@ -30,7 +30,6 @@
 const stripePublicKey = "pk_test_51Nuvx7LBiSBap6dTELycQx5ztdliBcqQoUqfxSxvrNTfTYwMbnEmGybbogjUpleB1LuUNho8jWQQZS7jD1wd2mhN00xQerpdXi";
 document.getElementById('payment-form').addEventListener('submit', function (event) {
 event.preventDefault();
-
 window.location.href = '{{ url('purchase_payment_success', {'id': purchase.id}) }}';
 });
 	</script>

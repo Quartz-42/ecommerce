@@ -15,7 +15,7 @@ class ConfirmationMail
         $this->mailer = $mailer;
     }
 
-    public function sendConfirmationMail(string $mailUser, string $purchasedItems, Purchase $purchase): void
+    public function sendConfirmationMail(string $mailUser, array $purchasedItems, Purchase $purchase): void
     {
         $email = (new TemplatedEmail())
             ->from('benjamin.baroche@free.fr')
