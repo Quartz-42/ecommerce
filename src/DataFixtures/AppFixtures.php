@@ -7,9 +7,12 @@ use App\Entity\Product;
 use App\Entity\Purchase;
 use App\Entity\PurchaseItem;
 use App\Entity\User;
+use Bezhanov\Faker\Provider\Commerce;
+use Bluemmb\Faker\PicsumPhotosProvider;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Liior\Faker\Prices;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -27,9 +30,9 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
-        $faker->addProvider(new \Liior\Faker\Prices($faker));
-        $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
-        $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider($faker));
+        $faker->addProvider(new Prices($faker));
+        $faker->addProvider(new Commerce($faker));
+        $faker->addProvider(new PicsumPhotosProvider($faker));
 
         $products = [];
 
