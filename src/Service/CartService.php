@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -21,12 +22,12 @@ class CartService
         return $this->requestStack->getSession()->get('cart', []);
     }
 
-    protected function saveCart(array $cart)
+    protected function saveCart(array $cart): array
     {
         return $this->requestStack->getSession()->set('cart', $cart);
     }
 
-    public function add(int $id)
+    public function add(int $id): void
     {
         // on cherche le panier dans la session, s'il n'existe pas on le crée
         $cart = $this->getCart();
@@ -49,7 +50,7 @@ class CartService
         $total = 0;
 
         foreach ($this->getCart() as $id => $quantity) {
-            /** @var \App\Entity\Product $product */
+            /** @var Product $product */
             $product = $this->productRepository->find($id);
 
             if (!$product) {
