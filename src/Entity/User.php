@@ -162,11 +162,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removePurchase(Purchase $purchase): static
     {
-        if ($this->purchases->removeElement($purchase)) {
-            // set the owning side to null (unless already changed)
-            if ($purchase->getUsers() === $this) {
-                $purchase->setUsers(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->purchases->removeElement($purchase) && $purchase->getUsers() === $this) {
+            $purchase->setUsers(null);
         }
 
         return $this;

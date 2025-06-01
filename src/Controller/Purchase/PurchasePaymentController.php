@@ -19,16 +19,15 @@ class PurchasePaymentController extends AbstractController
 
         if (
             /* @phpstan-ignore-next-line */
-            !$purchase
-            || ($purchase && $purchase->getUsers() !== $this->getUser() /* @phpstan-ignore-line */
-                || ($purchase && Purchase::STATUS_PAID === $purchase->getStatus())) /* @phpstan-ignore-line */
+            $purchase && $purchase->getUsers() !== $this->getUser() /* @phpstan-ignore-line */
+                || ($purchase && Purchase::STATUS_PAID === $purchase->getStatus()) /* @phpstan-ignore-line */
         ) {
             $this->addFlash('warning', 'La commande n\'existe pas');
 
             return $this->redirectToRoute('purchase_index');
         }
 
-        $paymentIntent = $stripeService->getPaymentIntent($purchase);
+        $stripeService->getPaymentIntent($purchase);
 
         return $this->render('/purchase/payment.html.twig', [
             'clientSecret' => $clientSecret,

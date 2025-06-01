@@ -33,7 +33,7 @@ class ProductCrudController extends AbstractCrudController
                 ->setUploadDir('/public/uploads')
                 ->setUploadedFileNamePattern('[slug].[extension]')
                 ->setRequired(Crud::PAGE_EDIT !== $pageName)
-                ->setFormTypeOptions(Crud::PAGE_EDIT == $pageName ? ['allow_delete' => false] : []),
+                ->setFormTypeOptions(Crud::PAGE_EDIT === $pageName ? ['allow_delete' => false] : []),
             DateTimeField::new('publication_date')
                 ->setTimezone('Europe/Paris')
                 ->setFormTypeOption('model_timezone', 'UTC')

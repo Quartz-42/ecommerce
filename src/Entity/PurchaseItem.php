@@ -58,10 +58,8 @@ class PurchaseItem
     {
         $this->purchase = $purchase;
 
-        if (null !== $purchase) {
-            if (!$purchase->getPurchaseItems()->contains($this)) {
-                $purchase->addPurchaseItem($this);
-            }
+        if ($purchase instanceof \App\Entity\Purchase && !$purchase->getPurchaseItems()->contains($this)) {
+            $purchase->addPurchaseItem($this);
         }
 
         return $this;

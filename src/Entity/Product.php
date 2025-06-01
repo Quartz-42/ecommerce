@@ -157,11 +157,9 @@ class Product
 
     public function removePurchaseItem(PurchaseItem $purchaseItem): static
     {
-        if ($this->purchaseItems->removeElement($purchaseItem)) {
-            // set the owning side to null (unless already changed)
-            if ($purchaseItem->getProduct() === $this) {
-                $purchaseItem->setProduct(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->purchaseItems->removeElement($purchaseItem) && $purchaseItem->getProduct() === $this) {
+            $purchaseItem->setProduct(null);
         }
 
         return $this;

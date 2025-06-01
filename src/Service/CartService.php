@@ -22,7 +22,7 @@ class CartService
         return $this->requestStack->getSession()->get('cart', []);
     }
 
-    protected function saveCart(array $cart): array
+    protected function saveCart(array $cart)
     {
         return $this->requestStack->getSession()->set('cart', $cart);
     }
