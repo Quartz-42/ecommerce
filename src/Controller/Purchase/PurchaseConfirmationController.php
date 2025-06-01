@@ -48,7 +48,7 @@ class PurchaseConfirmationController extends AbstractController
         }
 
         $cartItems = $this->cartService->getDetailedCartItems();
-        if (!$cartItems) {
+        if ($cartItems === []) {
             $this->addFlash('warning', 'Impossible de confirmer une commande vide');
 
             return $this->redirectToRoute('cart_show');

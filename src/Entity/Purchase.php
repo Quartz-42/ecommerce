@@ -175,11 +175,9 @@ class Purchase
 
     public function removePurchaseItem(PurchaseItem $purchaseItem): static
     {
-        if ($this->purchaseItems->removeElement($purchaseItem)) {
-            // set the owning side to null (unless already changed)
-            if ($purchaseItem->getPurchase() === $this) {
-                $purchaseItem->setPurchase(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->purchaseItems->removeElement($purchaseItem) && $purchaseItem->getPurchase() === $this) {
+            $purchaseItem->setPurchase(null);
         }
 
         return $this;
@@ -188,7 +186,7 @@ class Purchase
     #[ORM\PrePersist]
     public function prePersist(): void
     {
-        if (empty($this->purchasedAt)) {
+        if (!$this->purchasedAt instanceof \DateTimeImmutable) {
             $this->purchasedAt = \DateTimeImmutable::createFromMutable(new \DateTime());
         }
     }

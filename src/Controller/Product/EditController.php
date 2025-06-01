@@ -19,7 +19,7 @@ class EditController extends AbstractController
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() and $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // Gestion des images pour la prod
             // $uploadedFile = $form['mainPicture']->getData();
             // $destination = $this->getParameter('kernel.project_dir') . '/public/uploads/products_image';
