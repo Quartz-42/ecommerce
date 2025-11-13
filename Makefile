@@ -10,27 +10,6 @@ php-cs:
 tailwind-build:
 	symfony console tailwind:build --watch
 
-.PHONY : raz-db
-raz-db:
-	-- Désactiver les contraintes de clé étrangère
-	SET FOREIGN_KEY_CHECKS = 0;
-
-	-- Supprimer toutes les données des tables
-	TRUNCATE TABLE pokemon;
-	TRUNCATE TABLE pokevolution;
-	TRUNCATE TABLE talent;
-	TRUNCATE TABLE talent_pokemon;
-	TRUNCATE TABLE type;
-	TRUNCATE TABLE type_pokemon;
-
-	-- Réactiver les contraintes de clé étrangère
-	SET FOREIGN_KEY_CHECKS = 1;
-
-.PHONY :regenerate-db
-regenerate-db:
-	symfony console doctrine:migrations:diff --from-empty-schema
-	symfony console doctrine:migrations:rollup
-
 .PHONY : generate-db
 generate-db:
 	symfony console doctrine:database:create --if-not-exists
